@@ -28,6 +28,10 @@
     self.beveragesTableViewController = [[PCOBeveragesTableViewController alloc] initWithNibName:nil bundle:nil];
     self.beverageDetailTableViewController = [[PCOBeverageDetailTableViewController alloc] initWithNibName:nil bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.beveragesTableViewController];
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    navBar.barTintColor = [UIColor colorWithRed:241.0 / 255.0 green:100.0 / 255.0 blue:33.0 / 255.0 alpha:1.0];
+    navBar.barStyle = UIBarStyleBlackOpaque;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];

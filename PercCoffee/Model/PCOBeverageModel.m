@@ -10,4 +10,23 @@
 
 @implementation PCOBeverageModel
 
+- (instancetype) initWithBeverage:(NSString *)name
+                       beverageID:(NSString *)beverageID
+                        descShort:(NSString *)descShort
+                         descLong:(NSString *)descLong
+                      lastUpdated:(NSDate *)lastUpdated
+                         imageURL:(NSURL *)imageURL
+{
+    self = [super init];
+    if (self) {
+        _name = name;
+        _beverageID = beverageID;
+        _descShort = descShort;
+        _descLong = descLong;
+        _lastUpdated = lastUpdated;
+        _imageURL = imageURL;
+    }
+    return self;
+}
+
 @end

@@ -15,6 +15,6 @@
 @property (nonatomic, readonly) NSArray *beverages;
 
 - (void) loadBeverages;
-- (void) loadDetailsForBeverage:(PCOBeverageModel *)beverage;
+- (void) loadDetailsForBeverage:(NSDictionary *)beverage;
 
 @end

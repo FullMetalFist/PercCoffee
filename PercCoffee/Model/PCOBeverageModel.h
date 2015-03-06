@@ -17,4 +17,11 @@
 @property (nonatomic)       NSDate   *lastUpdated;
 @property (nonatomic, copy) NSURL    *imageURL;
 
+- (instancetype) initWithBeverage:(NSString *)name
+                       beverageID:(NSString *)beverageID
+                        descShort:(NSString *)descShort
+                         descLong:(NSString *)descLong
+                      lastUpdated:(NSDate *)lastUpdated
+                         imageURL:(NSURL *)imageURL;
+
 @end
