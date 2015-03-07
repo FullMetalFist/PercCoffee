@@ -18,6 +18,8 @@
 		7C1A3B091AA8A90300694D61 /* PCOBeverageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1A3B081AA8A90300694D61 /* PCOBeverageStore.m */; };
 		7C1A3B0D1AA8AA9F00694D61 /* PCOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1A3B0C1AA8AA9F00694D61 /* PCOConstants.m */; };
 		7C1A3B111AA8BF5200694D61 /* PCOBeverageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1A3B101AA8BF5200694D61 /* PCOBeverageTableViewCell.m */; };
+		7CBF047E1AAA4FA6001B5DB3 /* NSString+isNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CBF047D1AAA4FA6001B5DB3 /* NSString+isNumeric.m */; };
+		7CBF04851AAA7F40001B5DB3 /* UIColor+Coffee.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CBF04841AAA7F40001B5DB3 /* UIColor+Coffee.m */; };
 		ED330805F5E70525944EBAA0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95470B2F4B2FA1599E4B9724 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,10 @@
 		7C1A3B0C1AA8AA9F00694D61 /* PCOConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCOConstants.m; path = Constants/PCOConstants.m; sourceTree = "<group>"; };
 		7C1A3B0F1AA8BF5200694D61 /* PCOBeverageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCOBeverageTableViewCell.h; path = ViewControllers/Cells/PCOBeverageTableViewCell.h; sourceTree = "<group>"; };
 		7C1A3B101AA8BF5200694D61 /* PCOBeverageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCOBeverageTableViewCell.m; path = ViewControllers/Cells/PCOBeverageTableViewCell.m; sourceTree = "<group>"; };
+		7CBF047C1AAA4FA6001B5DB3 /* NSString+isNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+isNumeric.h"; path = "Category/NSString+isNumeric.h"; sourceTree = "<group>"; };
+		7CBF047D1AAA4FA6001B5DB3 /* NSString+isNumeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+isNumeric.m"; path = "Category/NSString+isNumeric.m"; sourceTree = "<group>"; };
+		7CBF04831AAA7F40001B5DB3 /* UIColor+Coffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Coffee.h"; path = "Category/UIColor+Coffee.h"; sourceTree = "<group>"; };
+		7CBF04841AAA7F40001B5DB3 /* UIColor+Coffee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Coffee.m"; path = "Category/UIColor+Coffee.m"; sourceTree = "<group>"; };
 		95470B2F4B2FA1599E4B9724 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDC7576B83A4572AC4E75A66 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +107,7 @@
 		7C1A3AD41AA8A4E700694D61 /* PercCoffee */ = {
 			isa = PBXGroup;
 			children = (
+				7CBF047F1AAA4FB8001B5DB3 /* Category */,
 				7C1A3AFB1AA8A5C100694D61 /* AppDelegate */,
 				7C1A3AE21AA8A4E700694D61 /* Images.xcassets */,
 				7C1A3AE41AA8A4E700694D61 /* LaunchScreen.xib */,
@@ -194,6 +201,17 @@
 				7C1A3B101AA8BF5200694D61 /* PCOBeverageTableViewCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		7CBF047F1AAA4FB8001B5DB3 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				7CBF047C1AAA4FA6001B5DB3 /* NSString+isNumeric.h */,
+				7CBF047D1AAA4FA6001B5DB3 /* NSString+isNumeric.m */,
+				7CBF04831AAA7F40001B5DB3 /* UIColor+Coffee.h */,
+				7CBF04841AAA7F40001B5DB3 /* UIColor+Coffee.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 		D009E4317C1242DBE2261E7E /* Pods */ = {
@@ -354,6 +372,8 @@
 				7C1A3B111AA8BF5200694D61 /* PCOBeverageTableViewCell.m in Sources */,
 				7C1A3AFE1AA8A61A00694D61 /* PCOBeveragesTableViewController.m in Sources */,
 				7C1A3B091AA8A90300694D61 /* PCOBeverageStore.m in Sources */,
+				7CBF047E1AAA4FA6001B5DB3 /* NSString+isNumeric.m in Sources */,
+				7CBF04851AAA7F40001B5DB3 /* UIColor+Coffee.m in Sources */,
 				7C1A3B021AA8A63F00694D61 /* PCOBeverageDetailTableViewController.m in Sources */,
 				7C1A3AD81AA8A4E700694D61 /* main.m in Sources */,
 			);

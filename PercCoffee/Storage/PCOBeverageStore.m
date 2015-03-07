@@ -11,6 +11,8 @@
 #import "PCOBeverageModel.h"
 #import "PCOConstants.h"
 
+#import "NSString+isNumeric.h"
+
 @interface PCOBeverageStore ()
 
 // reactive cocoa could fit here.. save the system from loading a additional arrays
@@ -27,6 +29,7 @@
 {
     self.createBeverages = [NSMutableArray array];
     [self apiCall];
+    self.beverages = [NSArray arrayWithArray:self.createBeverages];
 }
 
 - (void) loadDetailsForBeverage:(NSDictionary *)beverage
@@ -34,7 +37,12 @@
     for (beverage in self.beverages) {
         // numbered id breaks app
         // if it is a number, skip
-        if ([self validateStringContainsAlphabetsOnly:beverage[@"id"]]) {
+        
+        if ([beverage[@"id"] isNumeric]) {
+            NSLog(@"String has only numbers");
+            continue;
+        }
+        else {
             // get the general information
             self.beverageModel = [[PCOBeverageModel alloc]
                                   initWithBeverage:beverage[@"name"]
@@ -49,9 +57,6 @@
             
             // store in array
             [self.createBeverages addObject:self.beverageModel];
-        }
-        else {
-            
         }
     }
     NSLog(@"create Bev %@\nOuter Complete", self.createBeverages);
@@ -78,7 +83,7 @@
 
 - (void) apiInnerCallWithBeverage:(PCOBeverageModel *)beverage
 {
-    for (beverage in self.beverages) {
+    for (beverage in self.createBeverages) {
         NSString *coffeeURLInnerString = [NSString stringWithFormat:@"https://coffeeapi.percolate.com/api/coffee/%@/?api_key=%@", beverage.beverageID, PERCOLATE_API_KEY];
         AFHTTPRequestOperationManager *insideManager = [AFHTTPRequestOperationManager manager];
         [insideManager GET:coffeeURLInnerString parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
@@ -90,22 +95,6 @@
             NSLog(@"%@", error.localizedDescription);
         }];
     }
-}
-
-- (BOOL) validateStringContainsAlphabetsOnly:(NSString*)strng
-{
-    NSCharacterSet *strCharSet = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];//1234567890_"];
-    
-    strCharSet = [strCharSet invertedSet];
-    //And you can then use a string method to find if your string contains anything in the inverted set:
-    
-    NSRange r = [strng rangeOfCharacterFromSet:strCharSet];
-    if (r.location != NSNotFound) {
-        NSLog(@"the string contains illegal characters");
-        return NO;
-    }
-    else
-        return YES;
 }
 
 @end
