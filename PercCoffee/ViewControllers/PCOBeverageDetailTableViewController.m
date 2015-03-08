@@ -7,6 +7,12 @@
 //
 
 #import "PCOBeverageDetailTableViewController.h"
+#import "Cells/PCOBeverageName.h"
+#import "Cells/PCOBeverageDetail.h"
+#import "UIColor+Coffee.h"
+
+NSString *const kNameIdentifier;
+NSString *const kDetailIdentifier;
 
 @interface PCOBeverageDetailTableViewController ()
 
@@ -22,6 +28,10 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.nameCell = [[UITableViewCell alloc] init];
+    self.nameCell.textLabel.textColor = [UIColor colorForGrayDark];
+    self.detailsCell = [[UITableViewCell alloc] init];
+    self.detailsCell.textLabel.textColor = [UIColor colorForGray];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,20 +47,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
-    
-    return cell;
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+//    
+//    // Configure the cell...
+//    
+//    return cell;
+    return nil;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -9,6 +9,7 @@
 #import "PCOBeveragesTableViewController.h"
 #import "PCOBeverageStore.h"
 #import "PCOBeverageModel.h"
+#import "Cells/PCOBeverageTableViewCell.h"
 
 NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
 
@@ -29,10 +30,16 @@ NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CoffeeIdentifier];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     PCOBeverageStore *beverageStore = [[PCOBeverageStore alloc] init];
     [beverageStore loadBeverages];
-    self.beverageList = beverageStore.beverages;
+    self.beverageList = [NSArray arrayWithArray:beverageStore.beverages];
+    NSLog(@"%@", self.beverageList);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +61,7 @@ NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CoffeeIdentifier forIndexPath:indexPath];
+    PCOBeverageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CoffeeIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     PCOBeverageModel *beverage = self.beverageList[indexPath.row];

@@ -10,4 +10,8 @@
 
 @interface PCOBeverageTableViewCell : UITableViewCell
 
+@property (nonatomic) UILabel       *name;
+@property (nonatomic) UILabel       *descShort;
+@property (nonatomic) UIImageView   *picture;
+
 @end
