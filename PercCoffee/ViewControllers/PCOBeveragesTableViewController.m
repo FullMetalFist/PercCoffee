@@ -7,15 +7,17 @@
 //
 
 #import "PCOBeveragesTableViewController.h"
+#import "PCOBeverageDetailTableViewController.h"
 #import "PCOBeverageStore.h"
 #import "PCOBeverageModel.h"
 #import "Cells/PCOBeverageTableViewCell.h"
 
 NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
+NSString *const Detail = @"Detail";
 
 @interface PCOBeveragesTableViewController ()
 
-@property (nonatomic) NSArray *beverageList;
+@property (nonatomic) UIActivityIndicatorView   *spinner;
 
 @end
 
@@ -24,27 +26,25 @@ NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.beverageList = [NSArray array];
+    UIImageView *titleImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dripWhite"]];
+    self.navigationItem.titleView = titleImage;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CoffeeIdentifier];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    PCOBeverageStore *beverageStore = [[PCOBeverageStore alloc] init];
-    [beverageStore loadBeverages];
-    self.beverageList = [NSArray arrayWithArray:beverageStore.beverages];
-    NSLog(@"%@", self.beverageList);
-    dispatch_async(dispatch_get_main_queue(), ^{
+    self.beverageStore = [PCOBeverageStore sharedBeverageStore];
+    [self.tableView registerClass:[PCOBeverageTableViewCell class] forCellReuseIdentifier:CoffeeIdentifier];
+    [self.beverageStore loadBeveragesWithCompletion:^{
+        [self.beverageStore loadAllBeverageDetails];
+        [self.spinner stopAnimating];
         [self.tableView reloadData];
-    });
+    }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)startActivitySpinner {
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner.center = CGPointMake(160, 240);
+    self.spinner.hidesWhenStopped = YES;
+    [self.view addSubview:self.spinner];
+    [self.spinner startAnimating];
 }
 
 #pragma mark - Table view data source
@@ -56,7 +56,7 @@ NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.beverageList count];
+    return [self.beverageStore.beverages count];
 }
 
 
@@ -64,19 +64,26 @@ NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
     PCOBeverageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CoffeeIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PCOBeverageModel *beverage = self.beverageList[indexPath.row];
+    PCOBeverageModel *beverage = self.beverageStore.beverages[indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = beverage.name;
+//    cell.textLabel.font = [cell.name.font fontWithSize:12.0f];
+//    cell.name.text = beverage.name;
+//    cell.name.font = [cell.name.font fontWithSize:20.0];
+//    cell.descShort.text = beverage.descShort;
+//    if (beverage.imageURL) {
+//        NSURL *url = beverage.imageURL;
+//        cell.picture.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+//    }
+    
     return cell;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PCOBeverageModel *beverage = self.beverageStore.beverages[(int)indexPath.row];
+    PCOBeverageDetailTableViewController *nextVC = [[PCOBeverageDetailTableViewController alloc] init];
+    nextVC.beverageModel = beverage;
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
-*/
 
 @end

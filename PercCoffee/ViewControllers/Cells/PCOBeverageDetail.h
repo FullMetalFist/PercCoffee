@@ -12,5 +12,6 @@
 
 @property (nonatomic) UILabel       *descLong;
 @property (nonatomic) UIImageView   *picture;
+@property (nonatomic) UILabel       *lastUpdated;
 
 @end

@@ -12,9 +12,9 @@
 
 @interface PCOBeverageStore : NSObject
 
-@property (nonatomic, readonly) NSArray *beverages;
-
-- (void) loadBeverages;
-- (void) loadDetailsForBeverage:(NSDictionary *)beverage;
++ (instancetype) sharedBeverageStore;
+- (NSArray *) beverages;
+- (void) loadBeveragesWithCompletion:(void(^)(void))completion;
+- (void) loadAllBeverageDetails;
 
 @end

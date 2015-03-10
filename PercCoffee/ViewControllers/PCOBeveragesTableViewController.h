@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class PCOBeverageStore;
 @interface PCOBeveragesTableViewController : UITableViewController
+
+@property (nonatomic) PCOBeverageStore *beverageStore;
 
 @end

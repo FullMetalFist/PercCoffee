@@ -7,7 +7,30 @@
 //
 
 #import "PCOBeverageName.h"
+#import "UIColor+Coffee.h"
 
 @implementation PCOBeverageName
+
+- (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.name = [[UILabel alloc] init];
+        self.name.font = [UIFont systemFontOfSize:20.0];
+        self.name.textColor = [UIColor colorForGrayDark];
+        [self.contentView addSubview:self.name];
+    }
+    return self;
+}
+
+- (void) layoutSubviews
+{
+    [super layoutSubviews];
+    CGRect contentRect = self.contentView.bounds;
+    CGFloat boundsX = contentRect.origin.x;
+    CGRect frame;
+    frame = CGRectMake(boundsX + 20 ,0, 350, 50);
+    self.name.frame = frame;
+}
 
 @end

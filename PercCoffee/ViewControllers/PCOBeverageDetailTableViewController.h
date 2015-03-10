@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class PCOBeverageModel;
+
 @interface PCOBeverageDetailTableViewController : UITableViewController
 
-@property (nonatomic) UITableViewCell *nameCell;
-@property (nonatomic) UITableViewCell *detailsCell;
-@property (nonatomic) UIImageView *picture;
-@property (nonatomic) NSDate *lastUpdated;
+@property (strong, nonatomic) PCOBeverageModel *beverageModel;
 
 @end

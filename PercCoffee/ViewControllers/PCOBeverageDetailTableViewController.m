@@ -7,12 +7,14 @@
 //
 
 #import "PCOBeverageDetailTableViewController.h"
+
 #import "Cells/PCOBeverageName.h"
 #import "Cells/PCOBeverageDetail.h"
 #import "UIColor+Coffee.h"
+#import "PCOBeverageModel.h"
 
-NSString *const kNameIdentifier;
-NSString *const kDetailIdentifier;
+NSString *const kNameIdentifier = @"Name";
+NSString *const kDetailIdentifier = @"Detail";
 
 @interface PCOBeverageDetailTableViewController ()
 
@@ -20,23 +22,28 @@ NSString *const kDetailIdentifier;
 
 @implementation PCOBeverageDetailTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    UIImageView *titleImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dripWhite"]];
+//    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"shareButton"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
+//    self.navigationItem.rightBarButtonItem = shareButton;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.titleView = titleImage;
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.nameCell = [[UITableViewCell alloc] init];
-    self.nameCell.textLabel.textColor = [UIColor colorForGrayDark];
-    self.detailsCell = [[UITableViewCell alloc] init];
-    self.detailsCell.textLabel.textColor = [UIColor colorForGray];
+    [self.tableView registerClass:[PCOBeverageName class] forCellReuseIdentifier:kNameIdentifier];
+    [self.tableView registerClass:[PCOBeverageDetail class] forCellReuseIdentifier:kDetailIdentifier];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -48,63 +55,44 @@ NSString *const kDetailIdentifier;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 1;
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Configure the cell...
+    if (indexPath.row == 0) {
+        PCOBeverageName *cell = [tableView dequeueReusableCellWithIdentifier:kNameIdentifier forIndexPath:indexPath];
+        cell.name.text = self.beverageModel.name;
+        return cell;
+    }
+    else
+    {
+        PCOBeverageDetail *cell = [tableView dequeueReusableCellWithIdentifier:kDetailIdentifier forIndexPath:indexPath];
+        cell.descLong.text = self.beverageModel.descLong;
+        //cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.beverageModel.imageURL]];
+        //cell.lastUpdated.text = [NSDateFormatter self.beverageModel.lastUpdated;
+        return cell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        return 60.0;
+    }
+    else {
+        return 300.0;
+    }
+}
+
+#pragma mark -- UIBarButtonItem
+
+- (void) share
+{
+    NSLog(@"share button pressed!");
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-    return nil;
-}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
