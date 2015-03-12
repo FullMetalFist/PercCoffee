@@ -14,8 +14,8 @@
                        beverageID:(NSString *)beverageID
                         descShort:(NSString *)descShort
                          descLong:(NSString *)descLong
-                      lastUpdated:(NSDate *)lastUpdated
-                         imageURL:(NSURL *)imageURL
+                      lastUpdated:(NSString *)lastUpdated
+                         imageURLString:(NSString *)imageURLString
 {
     self = [super init];
     if (self) {
@@ -24,7 +24,7 @@
         _descShort = descShort;
         _descLong = descLong;
         _lastUpdated = lastUpdated;
-        _imageURL = imageURL;
+        _imageURLString = imageURLString;
     }
     return self;
 }

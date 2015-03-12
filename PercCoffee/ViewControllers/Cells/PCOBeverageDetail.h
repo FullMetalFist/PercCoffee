@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class PCOBeverageModel;
+
 @interface PCOBeverageDetail : UITableViewCell
 
-@property (nonatomic) UITextView    *descLong;
-@property (nonatomic) UILabel       *lastUpdated;
-@property (nonatomic) NSURL         *imageURL;
+@property (nonatomic) PCOBeverageModel  *beverage;
 
 @end

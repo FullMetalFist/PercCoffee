@@ -60,9 +60,9 @@ NSString *const kDetailIdentifier = @"Detail";
     else
     {
         PCOBeverageDetail *cell = [tableView dequeueReusableCellWithIdentifier:kDetailIdentifier forIndexPath:indexPath];
-        cell.descLong.text = self.beverageModel.descLong;
-        cell.imageURL = self.beverageModel.imageURL;
-        cell.lastUpdated.text = [NSString stringWithFormat:@"Updated: %@", self.beverageModel.lastUpdated];
+        cell.beverage.descLong = self.beverageModel.descLong;
+        cell.beverage.imageURLString = self.beverageModel.imageURLString;
+        cell.beverage.lastUpdated = [NSString stringWithFormat:@"Updated: %@", self.beverageModel.lastUpdated];
         return cell;
     }
 }

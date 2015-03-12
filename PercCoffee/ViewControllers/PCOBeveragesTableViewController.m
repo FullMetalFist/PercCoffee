@@ -15,6 +15,9 @@
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
 
+const CGFloat kCellContentMargin = 10.0f;
+const CGFloat kCellHeight = 350.0f;
+
 NSString *const CoffeeIdentifier = @"CoffeeIdentifier";
 NSString *const Detail = @"Detail";
 
@@ -70,14 +73,8 @@ NSString *const Detail = @"Detail";
     PCOBeverageModel *beverage = self.beverageStore.beverages[indexPath.row];
     
     // Configure the cell...
-    if (cell == nil) {
-        cell.frame = CGRectZero;
-        
-    }
+    [cell setBeverage:beverage];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.name.text = beverage.name;
-    cell.descShort.text = beverage.descShort;
-    cell.imageURL = beverage.imageURL;
     
     return cell;
 }
@@ -89,19 +86,27 @@ NSString *const Detail = @"Detail";
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PCOBeverageModel *beverage = [self.beverageStore.beverages objectAtIndex:indexPath.row];
-    NSString *name = beverage.name;
-    CGSize constraintName = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
-    CGSize nameSize = [name boundingRectWithSize:constraintName options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0]} context:nil].size;
-    CGFloat nameHeight = MAX(nameSize.height, 44.0f);
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
-    NSString *descShort = beverage.descShort;
-    CGSize constraintDesc = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 2000.0f);
-    CGSize descSize = [descShort boundingRectWithSize:constraintDesc options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0]} context:nil].size;
-    CGFloat descHeight = MAX(descSize.height, 44.0f);
-    
-    return descHeight + nameHeight + (CELL_CONTENT_MARGIN * 2);
+//    PCOBeverageModel *beverage = self.beverageStore.beverages[(int)indexPath.row];
+//    cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
+    return kCellHeight;
 }
+
+//- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    PCOBeverageModel *beverage = [self.beverageStore.beverages objectAtIndex:indexPath.row];
+//    NSString *name = beverage.name;
+//    CGSize constraintName = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+//    CGSize nameSize = [name boundingRectWithSize:constraintName options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0]} context:nil].size;
+//    CGFloat nameHeight = MAX(nameSize.height, 44.0f);
+//    
+//    NSString *descShort = beverage.descShort;
+//    CGSize constraintDesc = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 2000.0f);
+//    CGSize descSize = [descShort boundingRectWithSize:constraintDesc options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0]} context:nil].size;
+//    CGFloat descHeight = MAX(descSize.height, 44.0f);
+//    
+//    return descHeight + nameHeight + (CELL_CONTENT_MARGIN * 2);
+//}
 
 @end

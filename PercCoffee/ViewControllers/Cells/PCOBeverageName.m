@@ -16,7 +16,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.name = [[UILabel alloc] init];
-        //self.name.font = [UIFont systemFontOfSize:24.0];
+        self.name.backgroundColor = [UIColor clearColor];
         [self.name setFont:[UIFont fontWithName:@"HelveticaNeue" size:28.0]];
         self.name.textColor = [UIColor colorForGrayDark];
         [self.contentView addSubview:self.name];

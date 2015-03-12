@@ -63,7 +63,7 @@
                                                                                  descShort:drink[@"desc"]
                                                                                   descLong:nil
                                                                                lastUpdated:nil
-                                                                                  imageURL:drink[@"image_url"]];
+                                                                                  imageURLString:drink[@"image_url"]];
                 [self.createBeverages addObject:beverageMod];
                 
             }
@@ -74,7 +74,7 @@
                                                                                  descShort:drink[@"desc"]
                                                                                   descLong:nil
                                                                                lastUpdated:nil
-                                                                                  imageURL:nil];
+                                                                                  imageURLString:nil];
                 [self.createBeverages addObject:beverageMod];
             }
             

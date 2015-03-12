@@ -14,14 +14,14 @@
 @property (nonatomic, copy) NSString *beverageID;
 @property (nonatomic, copy) NSString *descShort;
 @property (nonatomic, copy) NSString *descLong;
-@property (nonatomic)       NSDate   *lastUpdated;
-@property (nonatomic, copy) NSURL    *imageURL;
+@property (nonatomic, copy) NSString *lastUpdated;
+@property (nonatomic, copy) NSString *imageURLString;
 
 - (instancetype) initWithBeverage:(NSString *)name
                        beverageID:(NSString *)beverageID
                         descShort:(NSString *)descShort
                          descLong:(NSString *)descLong
-                      lastUpdated:(NSDate *)lastUpdated
-                         imageURL:(NSURL *)imageURL;
+                      lastUpdated:(NSString *)lastUpdated
+                   imageURLString:(NSString *)imageURLString;
 
 @end
