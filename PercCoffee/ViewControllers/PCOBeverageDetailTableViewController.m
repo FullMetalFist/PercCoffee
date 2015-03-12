@@ -13,6 +13,9 @@
 #import "UIColor+Coffee.h"
 #import "PCOBeverageModel.h"
 
+#define kNameHeight 60.0f
+#define kDetailHeight 90.0f
+
 NSString *const kNameIdentifier = @"Name";
 NSString *const kDetailIdentifier = @"Detail";
 
@@ -25,20 +28,8 @@ NSString *const kDetailIdentifier = @"Detail";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *titleImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dripWhite"]];
-//    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"shareButton"] style:UIBarButtonItemStylePlain target:self action:@selector(share)];
-//    self.navigationItem.rightBarButtonItem = shareButton;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.titleView = titleImage;
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView registerClass:[PCOBeverageName class] forCellReuseIdentifier:kNameIdentifier];
-    [self.tableView registerClass:[PCOBeverageDetail class] forCellReuseIdentifier:kDetailIdentifier];
+    [self creation];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,8 +61,8 @@ NSString *const kDetailIdentifier = @"Detail";
     {
         PCOBeverageDetail *cell = [tableView dequeueReusableCellWithIdentifier:kDetailIdentifier forIndexPath:indexPath];
         cell.descLong.text = self.beverageModel.descLong;
-        //cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.beverageModel.imageURL]];
-        //cell.lastUpdated.text = [NSDateFormatter self.beverageModel.lastUpdated;
+        cell.imageURL = self.beverageModel.imageURL;
+        cell.lastUpdated.text = [NSString stringWithFormat:@"Updated: %@", self.beverageModel.lastUpdated];
         return cell;
     }
 }
@@ -79,20 +70,42 @@ NSString *const kDetailIdentifier = @"Detail";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 60.0;
+        return kNameHeight;
     }
     else {
-        return 300.0;
+        return kDetailHeight;
     }
 }
 
-#pragma mark -- UIBarButtonItem
+#pragma mark -- UIViews creation
+
+- (void) creation
+{
+    UIImageView *titleImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dripWhite"]];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"SHARE" forState:UIControlStateNormal];
+    button.titleLabel.textColor = [UIColor whiteColor];
+    button.frame = CGRectMake(10, 0, 90, 40);
+    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.layer.borderWidth = 1.0f;
+    [button addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.titleView = titleImage;
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+                                                         forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    [self.tableView registerClass:[PCOBeverageName class] forCellReuseIdentifier:kNameIdentifier];
+    [self.tableView registerClass:[PCOBeverageDetail class] forCellReuseIdentifier:kDetailIdentifier];
+}
 
 - (void) share
 {
     NSLog(@"share button pressed!");
 }
-
-
 
 @end

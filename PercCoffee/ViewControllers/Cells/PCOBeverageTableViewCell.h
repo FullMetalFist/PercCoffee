@@ -11,7 +11,7 @@
 @interface PCOBeverageTableViewCell : UITableViewCell
 
 @property (nonatomic) UILabel       *name;
-@property (nonatomic) UILabel       *descShort;
-@property (nonatomic) UIImageView   *picture;
+@property (nonatomic) UITextView    *descShort;
+@property (nonatomic) NSURL         *imageURL;
 
 @end

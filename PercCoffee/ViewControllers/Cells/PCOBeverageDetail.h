@@ -10,8 +10,8 @@
 
 @interface PCOBeverageDetail : UITableViewCell
 
-@property (nonatomic) UILabel       *descLong;
-@property (nonatomic) UIImageView   *picture;
+@property (nonatomic) UITextView    *descLong;
 @property (nonatomic) UILabel       *lastUpdated;
+@property (nonatomic) NSURL         *imageURL;
 
 @end
