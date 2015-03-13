@@ -11,14 +11,14 @@
 #import <UIImageView+AFNetworking.h>
 #import "PCOBeverageModel.h"
 
-NSString *const kNameLabelHorizontal = @"H:|-10-[name]-10-|";
-NSString *const kNameLabelVertical = @"V:|-10-[name]";
+NSString *const kNameLabelHorizontal = @"H:|-(10)-[name]-(10)-|";
+NSString *const kNameLabelVertical = @"V:|-(10)-[name]-(250)-|";
 
-NSString *const kDescShortHorizontal = @"H:|-10-[descShort]-10-|";
-NSString *const kDescShortVertical = @"V:[descShort]";
+NSString *const kDescShortHorizontal = @"H:|-(10)-[descShort]-(10)-|";
+NSString *const kDescShortVertical = @"V:|-(30)-[descShort]-(190)-|";
 
-NSString *const kPictureHorizontal = @"H:|-10-[picture]-10-|";
-NSString *const kPictureVertical = @"V:[picture]-10-|";
+NSString *const kPictureHorizontal = @"H:|-(10)-[picture]-(10)-|";
+NSString *const kPictureVertical = @"V:|-(70)-[picture]-(10)-|";
 
 @interface PCOBeverageTableViewCell()
 
@@ -35,7 +35,7 @@ NSString *const kPictureVertical = @"V:[picture]-10-|";
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-        self.name = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.name = [[UILabel alloc] init];
         [self.name setLineBreakMode:NSLineBreakByWordWrapping];
         [self.name setNumberOfLines:0];
         self.name.backgroundColor = [UIColor clearColor];
@@ -58,17 +58,19 @@ NSString *const kPictureVertical = @"V:[picture]-10-|";
         [self.picture setContentMode:UIViewContentModeTopLeft];
         [self.contentView addSubview:self.picture];
         
-                self.name.translatesAutoresizingMaskIntoConstraints = NO;
-                [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelHorizontal options:0 metrics:nil views:@{@"name":self.name}]];
-                [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelVertical options:0 metrics:nil views:@{@"name":self.name}]];
+        //NSDictionary *views = NSDictionaryOfVariableBindings(_name, _descShort, _picture);
         
-                self.descShort.translatesAutoresizingMaskIntoConstraints = NO;
-                [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortHorizontal options:0 metrics:nil views:@{@"descShort":self.descShort}]];
-                [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortVertical options:0 metrics:nil views:@{@"descShort":self.descShort}]];
+        self.name.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelHorizontal options:0 metrics:nil views:@{@"name":self.name}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelVertical options:0 metrics:nil views:@{@"name":self.name}]];
         
-                self.picture.translatesAutoresizingMaskIntoConstraints = NO;
-                [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureHorizontal options:0 metrics:nil views:@{@"picture":self.picture}]];
-                [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureVertical options:0 metrics:nil views:@{@"picture":self.picture}]];
+        self.descShort.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortHorizontal options:0 metrics:nil views:@{@"descShort":self.descShort}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortVertical options:0 metrics:nil views:@{@"descShort":self.descShort}]];
+        
+        self.picture.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureHorizontal options:0 metrics:nil views:@{@"picture":self.picture}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureVertical options:0 metrics:nil views:@{@"picture":self.picture}]];
     }
     return self;
 }
