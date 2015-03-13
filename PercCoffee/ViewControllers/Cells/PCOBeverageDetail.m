@@ -11,6 +11,15 @@
 #import "PCOBeverageModel.h"
 #import <UIImageView+AFNetworking.h>
 
+NSString *const kDescLongHorizontal = @"H:|-10-[descLong]-10-|";
+NSString *const kDescLongVertical = @"V:|-10-[descLong]";
+
+NSString *const kPictureDetailHorizontal = @"H:|-10-[picture]-10-|";
+NSString *const kPictureDetailVertical = @"V:[picture]";
+
+NSString *const kLastUpdatedHorizontal = @"H:|-10-[lastUpdated]-10-|";
+NSString *const kLastUpdatedVertical = @"V:[lastUpdated]-10-|";
+
 @interface PCOBeverageDetail()
 
 @property (nonatomic) UILabel       *descLong;
@@ -27,6 +36,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        
         self.descLong = [[UILabel alloc] init];
         self.picture = [[UIImageView alloc] init];
         self.lastUpdated = [[UILabel alloc] init];
@@ -40,6 +51,18 @@
         [self.contentView addSubview:self.descLong];
         [self.contentView addSubview:self.picture];
         [self.contentView addSubview:self.lastUpdated];
+        
+        self.descLong.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescLongHorizontal options:0 metrics:nil views:@{@"descLong":self.descLong}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescLongVertical options:0 metrics:nil views:@{@"descLong":self.descLong}]];
+        
+        self.picture.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureDetailHorizontal options:0 metrics:nil views:@{@"picture":self.picture}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureDetailVertical options:0 metrics:nil views:@{@"picture":self.picture}]];
+        
+        self.lastUpdated.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kLastUpdatedHorizontal options:0 metrics:nil views:@{@"lastUpdated":self.lastUpdated}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kLastUpdatedVertical options:0 metrics:nil views:@{@"lastUpdated":self.lastUpdated}]];
     }
     return self;
 }
