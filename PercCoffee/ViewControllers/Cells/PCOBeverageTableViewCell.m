@@ -8,17 +8,19 @@
 
 #import "PCOBeverageTableViewCell.h"
 #import "UIColor+Coffee.h"
-#import <UIImageView+AFNetworking.h>
 #import "PCOBeverageModel.h"
+#import <UIImageView+AFNetworking.h>
 
 NSString *const kNameLabelHorizontal = @"H:|-(10)-[name]-(10)-|";
-NSString *const kNameLabelVertical = @"V:|-(10)-[name]-(250)-|";
+NSString *const kNameLabelVertical = @"V:|-(10)-[name]-(320)-|";
 
 NSString *const kDescShortHorizontal = @"H:|-(10)-[descShort]-(10)-|";
-NSString *const kDescShortVertical = @"V:|-(30)-[descShort]-(190)-|";
+NSString *const kDescShortVertical = @"V:|-(20)-[descShort]-(290)-|";
 
 NSString *const kPictureHorizontal = @"H:|-(10)-[picture]-(10)-|";
-NSString *const kPictureVertical = @"V:|-(70)-[picture]-(10)-|";
+NSString *const kPictureVertical = @"V:[picture]-|";
+
+NSString *const kVerticalDimension = @"V:|-(10)-[name]-[descShort]-[picture]-(10)-|";
 
 @interface PCOBeverageTableViewCell()
 
@@ -42,35 +44,38 @@ NSString *const kPictureVertical = @"V:|-(70)-[picture]-(10)-|";
         self.name.font = [UIFont systemFontOfSize:15.0];
         self.name.textColor = [UIColor colorForGrayDark];
         self.name.text = self.beverage.name;
+        
         self.descShort = [[UILabel alloc] init];
+        [self.descShort setLineBreakMode:NSLineBreakByWordWrapping];
+        [self.descShort setNumberOfLines:0];
         self.descShort.backgroundColor = [UIColor clearColor];
-        self.descShort.font = [UIFont systemFontOfSize:15.0];
+        //self.descShort.font = [UIFont systemFontOfSize:15.0];
         [self.descShort setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0]];
         self.descShort.textColor = [UIColor colorForGray];
-        self.descShort.userInteractionEnabled = NO;
         self.descShort.text = self.beverage.descShort;
-        
         
         [self.contentView addSubview:self.name];
         [self.contentView addSubview:self.descShort];
         
         self.picture = [[UIImageView alloc] init];
         [self.picture setContentMode:UIViewContentModeTopLeft];
+        self.picture.clipsToBounds = YES;
         [self.contentView addSubview:self.picture];
         
-        //NSDictionary *views = NSDictionaryOfVariableBindings(_name, _descShort, _picture);
+        NSDictionary *views = @{@"name":self.name,@"descShort":self.descShort,@"picture":self.picture};
         
         self.name.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelHorizontal options:0 metrics:nil views:@{@"name":self.name}]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelVertical options:0 metrics:nil views:@{@"name":self.name}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelHorizontal options:0 metrics:nil views:views]];
+        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kNameLabelVertical options:0 metrics:nil views:views]];
         
         self.descShort.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortHorizontal options:0 metrics:nil views:@{@"descShort":self.descShort}]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortVertical options:0 metrics:nil views:@{@"descShort":self.descShort}]];
+        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescShortVertical options:0 metrics:nil views:views]];
         
         self.picture.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureHorizontal options:0 metrics:nil views:@{@"picture":self.picture}]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureVertical options:0 metrics:nil views:@{@"picture":self.picture}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureHorizontal options:0 metrics:nil views:views]];
+        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureVertical options:0 metrics:nil views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kVerticalDimension options:0 metrics:nil views:views]];
     }
     return self;
 }
@@ -117,62 +122,30 @@ NSString *const kPictureVertical = @"V:|-(70)-[picture]-(10)-|";
 {
     [super layoutSubviews];
     
-    if (!self.name)
-    {
-        self.name = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self.name setLineBreakMode:NSLineBreakByWordWrapping];
-        [self.name setNumberOfLines:0];
-        self.name.backgroundColor = [UIColor clearColor];
-        self.name.font = [UIFont systemFontOfSize:15.0];
-        self.name.textColor = [UIColor colorForGrayDark];
-        self.name.text = self.beverage.name;
-        self.descShort = [[UILabel alloc] init];
-        self.descShort.backgroundColor = [UIColor clearColor];
-        self.descShort.font = [UIFont systemFontOfSize:15.0];
-        [self.descShort setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0]];
-        self.descShort.textColor = [UIColor colorForGray];
-        self.descShort.userInteractionEnabled = NO;
-        self.descShort.text = self.beverage.descShort;
-        
-        
-        [self.contentView addSubview:self.name];
-        [self.contentView addSubview:self.descShort];
-        
-        self.picture = [[UIImageView alloc] init];
-        [self.picture setContentMode:UIViewContentModeTopLeft];
-        [self.contentView addSubview:self.picture];
-        CGSize nameSize = [self.name.text boundingRectWithSize:CGSizeMake(150, 104) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.name.font} context:nil].size;
-        self.name.frame = CGRectMake(15, 10, self.contentView.bounds.size.width, nameSize.height);
-        [self.contentView addSubview:self.name];
-        
-        CGSize descSize = [self.descShort.text boundingRectWithSize:CGSizeMake(150, 104) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.descShort.font} context:nil].size;
-        self.descShort.frame = CGRectMake(10, nameSize.height + 10, self.contentView.bounds.size.width, descSize.height);
-        [self.contentView addSubview:self.descShort];
-                
-        CGRect contentRect = self.contentView.bounds;
-        CGFloat boundsX = contentRect.origin.x;
-        CGRect frame;
-        
-        CGFloat labelSize = (nameSize.height + descSize.height + 20);
-        
-        frame = CGRectMake(boundsX + 10 , labelSize, 320, 480);
-        self.picture.frame = frame;
-    }
-}
-
-- (NSArray*)containedViewConstraints
-{
-    NSDictionary *views = NSDictionaryOfVariableBindings(self);
-    
-    return [[NSLayoutConstraint constraintsWithVisualFormat: @"V:|-0-[self]-0-|"
-                                                    options:0
-                                                    metrics:nil
-                                                      views:views]
-            arrayByAddingObjectsFromArray:
-            [NSLayoutConstraint constraintsWithVisualFormat: @"H:|-0-[self]-0-|"
-                                                    options:0
-                                                    metrics:nil
-                                                      views:views]];
+//    if (!self.name)
+//    {
+//        self.name = [[UILabel alloc] initWithFrame:CGRectZero];
+//        [self.name setLineBreakMode:NSLineBreakByWordWrapping];
+//        [self.name setNumberOfLines:0];
+//        self.name.backgroundColor = [UIColor clearColor];
+//        self.name.font = [UIFont systemFontOfSize:15.0];
+//        self.name.textColor = [UIColor colorForGrayDark];
+//        self.name.text = self.beverage.name;
+//        self.descShort = [[UILabel alloc] init];
+//        self.descShort.backgroundColor = [UIColor clearColor];
+//        self.descShort.font = [UIFont systemFontOfSize:15.0];
+//        [self.descShort setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0]];
+//        self.descShort.textColor = [UIColor colorForGray];
+//        self.descShort.text = self.beverage.descShort;
+//        
+//        
+//        [self.contentView addSubview:self.name];
+//        [self.contentView addSubview:self.descShort];
+//        
+//        self.picture = [[UIImageView alloc] init];
+//        [self.picture setContentMode:UIViewContentModeTopLeft];
+//        [self.contentView addSubview:self.picture];
+//    }
 }
 
 @end

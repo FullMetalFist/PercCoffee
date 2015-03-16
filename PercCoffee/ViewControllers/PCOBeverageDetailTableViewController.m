@@ -14,7 +14,7 @@
 #import "PCOBeverageModel.h"
 
 #define kNameHeight 60.0f
-#define kDetailHeight 90.0f
+#define kDetailHeight 390.0f
 
 NSString *const kNameIdentifier = @"Name";
 NSString *const kDetailIdentifier = @"Detail";

@@ -11,16 +11,14 @@
 #import "PCOBeverageModel.h"
 #import <UIImageView+AFNetworking.h>
 
-NSString *const kDescLongHorizontal = @"H:|-10-[descLong]-10-|";
-NSString *const kDescLongVertical = @"V:|-10-[descLong]";
+NSString *const kDescLongHorizontal = @"H:|-(10)-[descLong]-(10)-|";
+NSString *const kDescLongVertical = @"V:|-(10)-[descLong]-(320)-|";
 
-NSString *const kPictureDetailHorizontal = @"H:|-10-[picture]-10-|";
-NSString *const kPictureDetailVertical = @"V:[picture]";
+NSString *const kPictureDetailHorizontal = @"H:|-(10)-[picture]-(10)-|";
+NSString *const kPictureDetailVertical = @"V:|-(20)-[picture]-(30)-|";
 
-NSString *const kLastUpdatedHorizontal = @"H:|-10-[lastUpdated]-10-|";
-NSString *const kLastUpdatedVertical = @"V:[lastUpdated]-10-|";
-
-NSString *const kViewsVertical = @"V:|-10-[descLong]-10-[picture]-10-[lastUpdated]-10-|";
+NSString *const kLastUpdatedHorizontal = @"H:|-(10)-[lastUpdated]-(10)-|";
+NSString *const kLastUpdatedVertical = @"V:|-(320)-[lastUpdated]-(10)-|";
 
 @interface PCOBeverageDetail()
 
@@ -32,8 +30,6 @@ NSString *const kViewsVertical = @"V:|-10-[descLong]-10-[picture]-10-[lastUpdate
 
 @implementation PCOBeverageDetail
 
-@synthesize picture = _picture;
-
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -41,32 +37,39 @@ NSString *const kViewsVertical = @"V:|-10-[descLong]-10-[picture]-10-[lastUpdate
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         
         self.descLong = [[UILabel alloc] init];
-        self.picture = [[UIImageView alloc] init];
-        self.lastUpdated = [[UILabel alloc] init];
-        self.descLong.userInteractionEnabled = NO;
+        [self.descLong setLineBreakMode:NSLineBreakByWordWrapping];
+        [self.descLong setNumberOfLines:0];
         self.descLong.backgroundColor = [UIColor clearColor];
         self.descLong.font = [UIFont systemFontOfSize:12.0];
+        [self.descLong setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0]];
         self.descLong.textColor = [UIColor colorForGray];
+        self.descLong.text = self.beverage.descLong;
+        
+        self.lastUpdated = [[UILabel alloc] init];
         self.lastUpdated.backgroundColor = [UIColor clearColor];
         self.lastUpdated.font = [UIFont italicSystemFontOfSize:10.0];
         self.lastUpdated.textColor = [UIColor colorForGray];
-        [self.contentView addSubview:self.descLong];
+        self.lastUpdated.text = self.beverage.lastUpdated;
+        
+        self.picture = [[UIImageView alloc] init];
+        [self.picture setContentMode:UIViewContentModeTopLeft];
+        self.picture.clipsToBounds = YES;
+        
         [self.contentView addSubview:self.picture];
+        [self.contentView addSubview:self.descLong];
         [self.contentView addSubview:self.lastUpdated];
         
         self.descLong.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescLongHorizontal options:0 metrics:nil views:@{@"descLong":self.descLong}]];
-        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescLongVertical options:0 metrics:nil views:@{@"descLong":self.descLong}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kDescLongVertical options:0 metrics:nil views:@{@"descLong":self.descLong}]];
         
         self.picture.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureDetailHorizontal options:0 metrics:nil views:@{@"picture":self.picture}]];
-        //[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureDetailVertical options:0 metrics:nil views:@{@"picture":self.picture}]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kPictureDetailVertical options:0 metrics:nil views:@{@"picture":self.picture}]];
         
         self.lastUpdated.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kLastUpdatedHorizontal options:0 metrics:nil views:@{@"lastUpdated":self.lastUpdated}]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kLastUpdatedVertical options:0 metrics:nil views:@{@"lastUpdated":self.lastUpdated}]];
-//        NSDictionary *viewsVertical = NSDictionaryOfVariableBindings(_descLong, _picture, _lastUpdated);
-//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:kViewsVertical options:0 metrics:nil views:viewsVertical]];
     }
     return self;
 }
@@ -74,15 +77,28 @@ NSString *const kViewsVertical = @"V:|-10-[descLong]-10-[picture]-10-[lastUpdate
 - (void) layoutSubviews
 {
     [super layoutSubviews];
-    CGRect contentRect = self.contentView.bounds;
-    CGFloat boundsX = contentRect.origin.x;
-    CGRect frame;
-    frame = CGRectMake(boundsX + 10 , 0, 350, 50);
-    self.descLong.frame = frame;
-    frame = CGRectMake(boundsX + 10 , 55, 350, 225);
-    self.picture.frame = frame;
-    frame = CGRectMake(boundsX + 15 , 280, 150, 150);
-    self.lastUpdated.frame = frame;
+    
+//    if (!self.descLong)
+//    {
+//        self.descLong = [[UILabel alloc] init];
+//        [self.descLong setLineBreakMode:NSLineBreakByWordWrapping];
+//        [self.descLong setNumberOfLines:0];
+//        self.descLong.backgroundColor = [UIColor clearColor];
+//        self.descLong.font = [UIFont systemFontOfSize:15.0];
+//        self.descLong.textColor = [UIColor colorForGray];
+//        self.descLong.text = self.beverage.descLong;
+//        [self.contentView addSubview:self.descLong];
+//        self.picture = [[UIImageView alloc] init];
+//        [self.picture setContentMode:UIViewContentModeTopLeft];
+//        [self.contentView addSubview:self.picture];
+//        self.lastUpdated = [[UILabel alloc] init];
+//        self.lastUpdated.backgroundColor = [UIColor clearColor];
+//        self.lastUpdated.font = [UIFont systemFontOfSize:15.0];
+//        [self.lastUpdated setFont:[UIFont fontWithName:@"HelveticaNeue" size:15.0]];
+//        self.lastUpdated.text = self.beverage.lastUpdated;
+//        [self.contentView addSubview:self.lastUpdated];
+//        
+//    }
 }
 
 - (void)setBeverage:(PCOBeverageModel *)beverage
@@ -115,6 +131,12 @@ NSString *const kViewsVertical = @"V:|-10-[descLong]-10-[picture]-10-[lastUpdate
             } failure:nil];
         }
     }
+}
+
+- (void) prepareForReuse
+{
+    [super prepareForReuse];
+    [self.imageView cancelImageRequestOperation];
 }
 
 @end
